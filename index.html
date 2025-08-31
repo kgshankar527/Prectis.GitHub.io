@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopEasy</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+  <div class="logo">ShopEasy</div>
+  <ul class="desktop-menu">
+    <li><a href="#">Home</a></li>
+    <li class="nav-categories">
+      <a href="#" id="categoriesNav">Categories <i class="fa-solid fa-chevron-down"></i></a>
+      <div class="sub-categories">
+        <button class="category-btn" data-cat="All">All</button>
+        <button class="category-btn" data-cat="Electronics">Electronics</button>
+        <button class="category-btn" data-cat="Fashion">Fashion</button>
+        <button class="category-btn" data-cat="Grocery">Grocery</button>
+        <button class="category-btn" data-cat="Furniture">Furniture</button>
+      </div>
+    </li>
+    <li><a href="#">Deals</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="icons">
+    <i class="fa-solid fa-heart"></i>
+    <div class="cart-container" onclick="openCart()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span id="cartCount">0</span>
+    </div>
+  </div>
+  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#" id="categoriesNavMobile">Categories <i class="fa-solid fa-chevron-down"></i></a>
+    <div class="sub-categories-mobile">
+      <button class="category-btn" data-cat="All">All</button>
+      <button class="category-btn" data-cat="Electronics">Electronics</button>
+      <button class="category-btn" data-cat="Fashion">Fashion</button>
+      <button class="category-btn" data-cat="Grocery">Grocery</button>
+      <button class="category-btn" data-cat="Furniture">Furniture</button>
+    </div>
+    <a href="#">Deals</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<!-- Search & Filter -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
+  <select id="categoryFilter" onchange="filterProducts()">
+    <option value="All">All</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Fashion">Fashion</option>
+    <option value="Grocery">Grocery</option>
+    <option value="Furniture">Furniture</option>
+  </select>
+  <button onclick="filterProducts()"><i class="fa-solid fa-search"></i></button>
+</div>
+
+<!-- Best Deals Auto-Scroll Slider -->
+<h2 style="text-align:center; margin-top:20px;">Best Deals</h2>
+<div class="deals-slider-wrapper">
+  <button class="deal-arrow left" onclick="moveDeals(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+  <div class="deals-slider" id="dealsSlider">
+    <div class="deal-card"><img src="https://via.placeholder.com/250x150" alt=""><p>Smartphone - 10% OFF</p></div>
+    <div class="deal-card"><img src="https://via.placeholder.com/250x150" alt=""><p>Headphones - 15% OFF</p></div>
+    <div class="deal-card"><img src="https://via.placeholder.com/250x150" alt=""><p>Laptop - 5% OFF</p></div>
+    <div class="deal-card"><img src="https://via.placeholder.com/250x150" alt=""><p>Sofa Set - 20% OFF</p></div>
+    <div class="deal-card"><img src="https://via.placeholder.com/250x150" alt=""><p>T-Shirt - 30% OFF</p></div>
+  </div>
+  <button class="deal-arrow right" onclick="moveDeals(1)"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<!-- Products -->
+<div class="products" id="productContainer"></div>
+
+<!-- Cart Modal -->
+<div class="cart-container" onclick="cartModal.style.display='flex'; renderCart();">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="cartCount">0</span>
+</div>
+  
+<div class="cart-modal" id="cartModal">
+  <div class="cart-box">
+    <span class="close-btn" onclick="closeCart()">&times;</span>
+    <h3>My Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total">
+      Total: ₹<span id="cartTotal">0</span>
+    </div>
+    <button onclick="openCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-box">
+    <span class="close-btn" onclick="closeCheckout()">&times;</span>
+    <h3>Checkout</h3>
+    <div class="tabs">
+      <button class="active" id="guestTab" onclick="showForm('guest')">Guest Checkout</button>
+      <button id="accountTab" onclick="showForm('account')">Create Account</button>
+    </div>
+    <div id="guestForm">
+      <input type="text" placeholder="Full Name">
+      <input type="text" placeholder="Address">
+      <select>
+        <option>UPI</option>
+        <option>Debit/Credit Card</option>
+        <option>Net Banking</option>
+        <option>Cash on Delivery</option>
+      </select>
+      <button>Place Order as Guest</button>
+    </div>
+    <div id="accountForm" style="display:none;">
+      <input type="text" placeholder="Full Name">
+      <input type="email" placeholder="Email">
+      <input type="text" placeholder="Mobile Number">
+      <input type="password" placeholder="Password">
+      <input type="text" placeholder="Address">
+      <select>
+        <option>UPI</option>
+        <option>Debit/Credit Card</option>
+        <option>Net Banking</option>
+        <option>Cash on Delivery</option>
+      </select>
+      <button>Create Account & Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 ShopEasy. All rights reserved.</p>
+  <div class="social">
+    <i class="fa-brands fa-facebook"></i>
+    <i class="fa-brands fa-twitter"></i>
+    <i class="fa-brands fa-instagram"></i>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
